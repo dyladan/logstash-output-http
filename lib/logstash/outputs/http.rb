@@ -98,15 +98,6 @@ class LogStash::Outputs::Http < LogStash::Outputs::Base
   def register
     @http_method = @http_method.to_sym
 
-    # We count outstanding requests with this queue
-    # This queue tracks the requests to create backpressure
-    # When this queue is empty no new requests may be sent,
-    # tokens must be added back by the client on success
-    @request_tokens = SizedQueue.new(@pool_max)
-    @pool_max.times {|t| @request_tokens << true }
-
-    @requests = Array.new
-
     if @content_type.nil?
       case @format
         when "form" ; @content_type = "application/x-www-form-urlencoded"

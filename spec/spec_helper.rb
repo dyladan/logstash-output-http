@@ -14,7 +14,6 @@ PORT = rand(65535-1024) + 1025
 
 class LogStash::Outputs::Http
   attr_writer :agent
-  attr_reader :request_tokens
 end
 
 # NOTE: extend WEBrick with support for config[:SSLVersion]
